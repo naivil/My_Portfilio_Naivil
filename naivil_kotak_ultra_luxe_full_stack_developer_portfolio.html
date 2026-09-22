@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Naivil Kotak | Full Stack Developer &amp; Software Engineer</title>
+  <meta name="description" content="Portfolio of Naivil Kotak - Full Stack Web Developer. Specializing in React JS, Node.js, JavaScript, and Modern Web Architectures. Explore interactive universe skills and live projects." />
+
+  <!-- Google Fonts: Inter, Outfit & Fira Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5.3.3 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <!-- FontAwesome 6 for Tech Logos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    /* ========================================================
+       DESIGN TOKENS & DYNAMIC THEMING
+       ======================================================== */
+    :root[data-bs-theme="dark"] {
+      --bg-canvas: #050811;
+      --bg-surface: #0a0f1d;
+      --bg-surface-elevated: #11182c;
+      --bg-glass: rgba(10, 15, 29, 0.75);
+      --bg-glass-card: rgba(15, 22, 41, 0.65);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(99, 102, 241, 0.35);
+      --border-glow: rgba(99, 102, 241, 0.6);
+      --text-main: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --primary-accent: #6366f1;
+      --secondary-accent: #06b6d4;
+      --accent-gradient: linear-gradient(135deg, #6366f1 0%, #06b6d4 50%, #3b82f6 100%);
+      --accent-gradient-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(6, 182, 212, 0.3));
+      --orbit-ring: rgba(99, 102, 241, 0.22);
+      --orbit-glow: rgba(99, 102, 241, 0.15);
+      --terminal-bg: #030712;
+      --card-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.65);
+      --neon-glow: 0 0 25px rgba(99, 102, 241, 0.35);
+    }
+
+    :root[data-bs-theme="light"] {
+      --bg-canvas: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-glass: rgba(255, 255, 255, 0.85);
+      --bg-glass-card: rgba(255, 255, 255, 0.8);
+      --border-subtle: rgba(226, 232, 240, 0.9);
+      --border-accent: rgba(99, 102, 241, 0.35);
+      --border-glow: rgba(99, 102, 241, 0.4);
+      --text-main: #090d16;
+      --text-secondary: #475569;
+      --text-muted: #94a3b8;
+      --primary-accent: #4f46e5;
+      --secondary-accent: #0284c7;
+      --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #0284c7 100%);
+      --accent-gradient-glow: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(2, 132, 199, 0.15));
+      --orbit-ring: rgba(79, 70, 229, 0.2);
+      --orbit-glow: rgba(79, 70, 229, 0.08);
+      --terminal-bg: #0f172a;
+      --card-shadow: 0 12px 30px -8px rgba(99, 102, 241, 0.08);
+      --neon-glow: 0 0 20px rgba(79, 70, 229, 0.2);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.7;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    h1, h2, h3, h4, h5, h6, .brand-font {
+      font-family: 'Outfit', sans-serif;
+      letter-spacing: -0.025em;
+    }
+
+    .code-font {
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Ambient background grid */
+    .ambient-grid {
+      background-image: 
+        radial-gradient(circle at 50% 0%, var(--orbit-glow) 0%, transparent 60%),
+        linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+      background-size: 100% 100%, 48px 48px, 48px 48px;
+      background-position: top center, center center, center center;
+    }
+
+    /* Scroll progress indicator */
+    #scrollProgressIndicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: var(--accent-gradient);
+      z-index: 1050;
+      transition: width 0.1s ease-out;
+      box-shadow: 0 0 10px var(--primary-accent);
+    }
+
+    /* Glassmorphic Components */
+    .glass-panel {
+      background: var(--bg-glass-card);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--border-subtle);
+      border-radius: 1.25rem;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease,
+                  box-shadow 0.35s ease;
+    }
+
+    .glass-panel:hover {
+      border-color: var(--border-accent);
+      transform: translateY(-5px);
+      box-shadow: var(--card-shadow), var(--neon-glow);
+    }
+
+    .navbar-glass {
+      background: var(--bg-glass);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .navbar-glass.scrolled {
+      padding-top: 0.55rem !important;
+      padding-bottom: 0.55rem !important;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+    }
+
+    .nav-link {
+      color: var(--text-secondary) !important;
+      font-weight: 500;
+      font-size: 0.92rem;
+      padding: 0.45rem 0.95rem !important;
+      border-radius: 0.5rem;
+      transition: all 0.25s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: var(--text-main) !important;
+      background: rgba(99, 102, 241, 0.1);
+    }
+
+    /* Text Gradients & Glowing Buttons */
+    .text-gradient {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .btn-gradient {
+      background: var(--accent-gradient);
+      color: #ffffff !important;
+      font-weight: 600;
+      border: none;
+      padding: 0.78rem 1.65rem;
+      border-radius: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .btn-gradient:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.55);
+      color: #fff !important;
+    }
+
+    .btn-glass {
+      background: rgba(125, 125, 125, 0.08);
+      color: var(--text-main) !important;
+      border: 1px solid var(--border-subtle);
+      padding: 0.75rem 1.45rem;
+      border-radius: 0.85rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      transition: all 0.25s ease;
+    }
+    .btn-glass:hover {
+      background: rgba(99, 102, 241, 0.12);
+      border-color: var(--border-accent);
+      color: var(--primary-accent) !important;
+      transform: translateY(-2px);
+    }
+
+    /* Particle Canvas overlay in Hero */
+    #heroCanvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.65;
+    }
+
+    /* Status Pulse Badges */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.45rem 1.15rem;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid var(--border-accent);
+      color: var(--primary-accent);
+    }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background-color: #10b981;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulsePulse 2s infinite ease-in-out;
+    }
+    @keyframes pulsePulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.4; }
+    }
+
+    /* 3D Tilt Card Container */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: transform 0.2s ease-out;
+    }
+
+    /* Floating Keyframes */
+    .floating-anim-slow {
+      animation: floatSmooth 6s ease-in-out infinite;
+    }
+    .floating-anim-fast {
+      animation: floatSmooth 4.5s ease-in-out infinite reverse;
+    }
+    @keyframes floatSmooth {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* ========================================================
+       UNIVERSE 3D-STYLE ORBIT ENGINE
+       ======================================================== */
+    .universe-viewport {
+      position: relative;
+      width: 100%;
+      max-width: 660px;
+      height: 660px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .universe-core-sun {
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #818cf8 0%, #4f46e5 55%, #1e1b4b 100%);
+      box-shadow: 0 0 50px rgba(99, 102, 241, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 20;
+      color: #ffffff;
+      cursor: pointer;
+      text-align: center;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+    }
+    .universe-core-sun:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 70px rgba(99, 102, 241, 0.7);
+    }
+
+    /* Concentric Orbit Paths */
+    .orbit-track {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px dashed var(--orbit-ring);
+      box-shadow: inset 0 0 25px var(--orbit-glow), 0 0 20px var(--orbit-glow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      transform-origin: center center;
+    }
+
+    /* Orbit Rings with dynamically modifiable speed variables */
+    .track-tier-1 {
+      width: 240px;
+      height: 240px;
+      animation: orbitRotateCW var(--orbit-speed-1, 24s) linear infinite;
+    }
+    .track-tier-2 {
+      width: 410px;
+      height: 410px;
+      animation: orbitRotateCCW var(--orbit-speed-2, 34s) linear infinite;
+    }
+    .track-tier-3 {
+      width: 580px;
+      height: 580px;
+      animation: orbitRotateCW var(--orbit-speed-3, 44s) linear infinite;
+    }
+
+    @keyframes orbitRotateCW {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes orbitRotateCCW {
+      from { transform: rotate(360deg); }
+      to { transform: rotate(0deg); }
+    }
+
+    .universe-paused .orbit-track,
+    .universe-paused .planet-body {
+      animation-play-state: paused !important;
+    }
+
+    /* Planetary Tech Bodies */
+    .planet-body {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--bg-surface);
+      border: 2px solid var(--border-accent);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 16px rgba(99, 102, 241, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      z-index: 25;
+    }
+    .planet-body:hover, .planet-body.active-planet {
+      transform: scale(1.25) !important;
+      border-color: #38bdf8;
+      box-shadow: 0 0 28px rgba(56, 189, 248, 0.7);
+      background: var(--bg-surface-elevated);
+      z-index: 40;
+    }
+
+    /* Counter rotations so icons remain right side up */
+    .counter-rot-1 {
+      animation: orbitRotateCCW var(--orbit-speed-1, 24s) linear infinite;
+    }
+    .counter-rot-2 {
+      animation: orbitRotateCW var(--orbit-speed-2, 34s) linear infinite;
+    }
+    .counter-rot-3 {
+      animation: orbitRotateCCW var(--orbit-speed-3, 44s) linear infinite;
+    }
+
+    /* Node positioning on tracks */
+    .pos-html { top: -30px; left: calc(50% - 30px); }
+    .pos-css { bottom: -30px; left: calc(50% - 30px); }
+    .pos-js { top: calc(50% - 30px); left: -30px; }
+    .pos-bootstrap { top: 40px; right: 20px; }
+    .pos-react { bottom: 40px; right: 20px; }
+    .pos-node { top: -30px; left: calc(50% - 30px); }
+    .pos-express { top: calc(50% - 30px); right: -30px; }
+    .pos-git { bottom: 65px; left: 35px; }
+    .pos-api { bottom: 65px; right: 35px; }
+
+    /* ========================================================
+       PROJECT CARD SHOWCASE STYLING
+       ======================================================== */
+    .project-browser-frame {
+      border-radius: 1rem 1rem 0 0;
+      background: #0f172a;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .browser-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .browser-url-bar {
+      flex-grow: 1;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 6px;
+      padding: 0.18rem 0.75rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-family: 'Fira Code', monospace;
+    }
+    .project-image-box {
+      height: 240px;
+      position: relative;
+      overflow: hidden;
+      background-color: #0b0f19;
+    }
+    .project-image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+      filter: saturate(0.98);
+    }
+    .glass-panel:hover .project-image-box img {
+      transform: scale(1.05);
+      filter: saturate(1.1);
+    }
+    .project-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 55%, rgba(5, 8, 17, 0.85) 100%);
+      pointer-events: none;
+    }
+    .project-iframe-container {
+      width: 100%;
+      height: 240px;
+      position: relative;
+      overflow: hidden;
+      display: none;
+      background: #000;
+    }
+    .project-iframe-container iframe {
+      width: 1280px;
+      height: 800px;
+      transform: scale(0.35);
+      transform-origin: 0 0;
+      border: none;
+      pointer-events: auto;
+    }
+    .preview-mode-toggle {
+      font-size: 0.7rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .preview-mode-toggle:hover, .preview-mode-toggle.active-mode {
+      background: var(--primary-accent);
+      color: #fff;
+      border-color: var(--primary-accent);
+    }
+
+    .tech-pill {
+      font-size: 0.75rem;
+      padding: 0.28rem 0.65rem;
+      border-radius: 8px;
+      background: rgba(99, 102, 241, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* CLI Interactive Terminal */
+    .cli-terminal {
+      background: var(--terminal-bg);
+      border: 1px solid var(--border-accent);
+      border-radius: 1rem;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+    }
+    .cli-screen {
+      height: 280px;
+      overflow-y: auto;
+      padding: 1.25rem;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.86rem;
+      color: #e2e8f0;
+      line-height: 1.6;
+    }
+    .cli-input-line {
+      display: flex;
+      align-items: center;
+      padding: 0.85rem 1.25rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Scroll reveal transitions */
+    .reveal-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+    .reveal-scroll.is-revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+      .universe-viewport {
+        max-width: 360px;
+        height: 360px;
+      }
+      .universe-core-sun {
+        width: 80px;
+        height: 80px;
+        font-size: 0.7rem;
+      }
+      .track-tier-1 { width: 140px; height: 140px; }
+      .track-tier-2 { width: 235px; height: 235px; }
+      .track-tier-3 { width: 330px; height: 330px; }
+      .planet-body { width: 44px; height: 44px; font-size: 1.05rem; }
+
+      .pos-html { top: -22px; left: calc(50% - 22px); }
+      .pos-css { bottom: -22px; left: calc(50% - 22px); }
+      .pos-js { top: calc(50% - 22px); left: -22px; }
+      .pos-bootstrap { top: 22px; right: 12px; }
+      .pos-react { bottom: 22px; right: 12px; }
+      .pos-node { top: -22px; left: calc(50% - 22px); }
+      .pos-express { top: calc(50% - 22px); right: -22px; }
+      .pos-git { bottom: 35px; left: 18px; }
+      .pos-api { bottom: 35px; right: 18px; }
+    }
+  </style>
+</head>
+<body class="ambient-grid">
+
+  <!-- Top Scroll Progress Indicator -->
+  <div id="scrollProgressIndicator"></div>
+
+  <!-- Primary Navigation Bar -->
+  <nav id="mainNavbar" class="navbar navbar-expand-lg fixed-top navbar-glass py-3">
+    <div class="container">
+      <!-- Brand Logo -->
+      <a class="navbar-brand d-flex align-items-center gap-2" href="#hero">
+        <span class="d-inline-flex align-items-center justify-content-center rounded-3 text-white fw-bold brand-font" 
+              style="width: 40px; height: 40px; background: var(--accent-gradient);">
+          NK
+        </span>
+        <div class="d-flex flex-column">
+          <span class="fw-bold tracking-tight text-main fs-5 brand-font line-height-1">Naivil Kotak</span>
+          <span class="code-font text-muted" style="font-size: 0.72rem;">&lt;FullStack Engineer /&gt;</span>
+        </div>
+      </a>
+
+      <!-- Mobile Controls (Theme + Nav Toggle) -->
+      <div class="d-flex align-items-center gap-2 d-lg-none">
+        <button id="themeToggleMobile" class="btn btn-sm btn-glass p-2 rounded-circle" style="width: 38px; height: 38px;" aria-label="Toggle Theme">
+          <i class="bi bi-moon-stars-fill" id="themeIconMobile"></i>
+        </button>
+        <button class="navbar-toggler border-0 shadow-none text-main p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+          <i class="bi bi-list fs-1"></i>
+        </button>
+      </div>
+
+      <!-- Desktop Nav Items -->
+      <div class="collapse navbar-collapse" id="navContent">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#universe">Universe Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#terminal">Terminal</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+
+          <!-- Direct Resume CTA -->
+          <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+            <a href="https://drive.google.com/file/d/1QH_HhUPcuGi46SkKY8VDofnO3KnYL9ns/view?usp=sharing" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="btn btn-sm btn-glass text-main py-2 px-3 fw-semibold">
+              <i class="bi bi-file-earmark-pdf-fill text-danger me-1"></i>
+              <span>Resume</span>
+            </a>
+          </li>
+
+          <!-- Theme Toggle Desktop -->
+          <li class="nav-item ms-lg-2 d-none d-lg-block">
+            <button id="themeToggleDesktop" class="btn btn-sm btn-glass p-2 rounded-circle" style="width: 40px; height: 40px;" aria-label="Toggle Theme">
+              <i class="bi bi-moon-stars-fill fs-6" id="themeIconDesktop"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="hero" class="min-vh-100 d-flex align-items-center position-relative pt-5 pb-5 overflow-hidden">
+    <!-- Interactive Particle Background Canvas -->
+    <canvas id="heroCanvas"></canvas>
+
+    <div class="container py-5 my-auto position-relative" style="z-index: 2;">
+      <div class="row align-items-center gy-5">
+        <div class="col-lg-7">
+          <div class="status-pill mb-3 reveal-scroll">
+            <span class="status-dot"></span>
+            <span>Actively Seeking Junior / Full Stack Developer Roles</span>
+          </div>
+
+          <h1 class="display-3 fw-bolder mb-3 text-main reveal-scroll">
+            Hi, I'm <span class="text-gradient">Naivil Kotak</span>
+          </h1>
+
+          <div class="h3 fw-semibold text-secondary mb-4 code-font d-flex align-items-center flex-wrap reveal-scroll">
+            <span class="text-muted me-2">&gt;</span>
+            <span id="roleTypewriter" class="text-gradient fw-bold">Full Stack Developer</span>
+            <span class="typing-cursor" style="display:inline-block; width:2px; height:1.2em; background:var(--secondary-accent); margin-left:5px; animation: pulsePulse 0.9s infinite;"></span>
+          </div>
+
+          <p class="lead text-secondary mb-4 col-xl-11 fs-5 reveal-scroll" style="line-height: 1.8;">
+            A passionate, modern <strong class="text-main">Full Stack Web Developer</strong> specialized in component-driven client architecture with <strong class="text-main">React JS</strong> and high-performance server logic via <strong class="text-main">Node.js &amp; REST APIs</strong>. Focused on writing testable, production-ready, and responsive web solutions.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="d-flex flex-wrap gap-3 pt-2 mb-5 reveal-scroll">
+            <a href="#projects" class="btn-gradient">
+              <i class="bi bi-grid-fill"></i>
+              <span>Explore Featured Projects</span>
+            </a>
+
+            <a href="https://drive.google.com/file/d/1QH_HhUPcuGi46SkKY8VDofnO3KnYL9ns/view?usp=sharing" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               class="btn-glass">
+              <i class="bi bi-file-earmark-arrow-down text-danger"></i>
+              <span>Download Resume (PDF)</span>
+            </a>
+
+            <a href="#contact" class="btn-glass">
+              <i class="bi bi-chat-quote-fill"></i>
+              <span>Let's Talk</span>
+            </a>
+          </div>
+
+          <!-- Quick Metrics Bar (Streamlined 3-card balance) -->
+          <div class="row g-3 col-xl-11 reveal-scroll">
+            <div class="col-4">
+              <div class="p-3 glass-panel text-center">
+                <div class="text-gradient fw-bold fs-3 brand-font">4+</div>
+                <div class="text-secondary small">Vercel Deployments</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-3 glass-panel text-center">
+                <div class="text-gradient fw-bold fs-3 brand-font">8+</div>
+                <div class="text-secondary small">Mastered Techs</div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="p-3 glass-panel text-center">
+                <div class="text-gradient fw-bold fs-3 brand-font">100%</div>
+                <div class="text-secondary small">Responsive Layouts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero 3D Card Interactive Preview -->
+        <div class="col-lg-5 reveal-scroll">
+          <div class="tilt-card" id="heroTiltTarget">
+            <div class="glass-panel p-4 position-relative overflow-hidden">
+              <div class="d-flex align-items-center justify-content-between pb-3 mb-3 border-bottom border-secondary border-opacity-25">
+                <div class="d-flex gap-2">
+                  <span class="browser-dot bg-danger"></span>
+                  <span class="browser-dot bg-warning"></span>
+                  <span class="browser-dot bg-success"></span>
+                </div>
+                <span class="code-font text-muted small"><i class="bi bi-shield-check text-success me-1"></i>naivil.engineer.config</span>
+                <span class="badge bg-primary bg-opacity-15 text-primary code-font">v2.4.0</span>
+              </div>
+
+              <!-- Terminal Code Representation -->
+              <pre class="code-font mb-0 text-main small" style="overflow-x: auto; tab-size: 2;"><code><span class="text-secondary">// Candidate Profile Configuration</span>
+<span class="text-info">const</span> <span class="text-warning">engineer</span> = {
+  <span class="text-info">name</span>: <span class="text-success">"Naivil Kotak"</span>,
+  <span class="text-info">location</span>: <span class="text-success">"Gujarat, India"</span>,
+  <span class="text-info">specialization</span>: <span class="text-success">"Full Stack Web Development"</span>,
+  <span class="text-info">frontend</span>: [<span class="text-warning">"React JS"</span>, <span class="text-warning">"Bootstrap 5"</span>, <span class="text-warning">"HTML5/CSS3"</span>],
+  <span class="text-info">backend</span>: [<span class="text-warning">"Node.js"</span>, <span class="text-warning">"Express.js"</span>, <span class="text-warning">"REST APIs"</span>],
+  <span class="text-info">tooling</span>: [<span class="text-warning">"Git"</span>, <span class="text-warning">"GitHub"</span>, <span class="text-warning">"Vercel"</span>],
+  <span class="text-info">openForHiring</span>: <span class="text-info">true</span>
+};
+
+<span class="text-secondary">// Direct Communication Channels</span>
+<span class="text-info">const</span> <span class="text-warning">contact</span> = {
+  <span class="text-info">phone</span>: <span class="text-success">"9409004851"</span>,
+  <span class="text-info">email</span>: <span class="text-success">"kotaknaivil599@gmail.com"</span>
+};</code></pre>
+
+              <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 d-flex justify-content-between align-items-center">
+                <span class="small text-secondary"><i class="bi bi-geo-alt-fill text-danger me-1"></i>Open to Remote &amp; On-Site</span>
+                <div class="d-flex gap-2">
+                  <a href="https://github.com/naivil" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass px-2 text-main" title="GitHub">
+                    <i class="bi bi-github"></i>
+                  </a>
+                  <a href="https://www.linkedin.com/in/naivil-kotak" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass px-2 text-main" title="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about" class="py-5 position-relative">
+    <div class="container py-5">
+      <div class="text-center mb-5 reveal-scroll">
+        <span class="text-uppercase tracking-wider small fw-semibold text-gradient code-font">// 01. PROFESSIONAL BACKGROUND</span>
+        <h2 class="display-5 fw-bold text-main mt-1">Engineering Ethos &amp; Story</h2>
+        <p class="text-secondary mx-auto col-md-8 col-lg-6">
+          Building a robust developer pedigree through continuous coding practice, modular design principles, and modern web frameworks.
+        </p>
+      </div>
+
+      <div class="row g-4 align-items-stretch">
+        <div class="col-lg-6 reveal-scroll">
+          <div class="glass-panel p-4 p-md-5 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <div class="d-flex align-items-center gap-3 mb-4">
+                <div class="p-3 rounded-4" style="background: rgba(99, 102, 241, 0.15); color: var(--primary-accent);">
+                  <i class="bi bi-code-square fs-2"></i>
+                </div>
+                <div>
+                  <h3 class="h4 text-main fw-bold mb-0">At the Start of My Professional Journey</h3>
+                  <span class="text-muted small">0 Years Experience &bull; High-Velocity Adaptability</span>
+                </div>
+              </div>
+
+              <p class="text-secondary">
+                Hello! I am <strong class="text-main">Naivil Kotak</strong>. While I am at the entry-level stage of my professional career without corporate legacy constraints, I bring high energy, up-to-date knowledge of the JavaScript ecosystem, and disciplined engineering practices.
+              </p>
+              <p class="text-secondary">
+                My training has been rooted in building fully functional web applications—from single-page applications engineered in <strong class="text-main">React JS</strong> with custom components, to resilient server layers in <strong class="text-main">Node.js</strong> that communicate with external APIs and databases.
+              </p>
+              <p class="text-secondary mb-0">
+                I take pride in writing readable semantic markup, scalable utility-first stylesheets, clean asynchronous handlers, and utilizing Git for disciplined version control.
+              </p>
+            </div>
+
+            <div class="pt-4 mt-4 border-top border-secondary border-opacity-25 d-flex flex-wrap align-items-center justify-content-between gap-3">
+              <div>
+                <div class="text-secondary small">Verified Resume Document:</div>
+                <div class="text-main fw-semibold">Google Drive PDF Access</div>
+              </div>
+              <a href="https://drive.google.com/file/d/1QH_HhUPcuGi46SkKY8VDofnO3KnYL9ns/view?usp=sharing" 
+                 target="_blank" 
+                 rel="noopener noreferrer" 
+                 class="btn-gradient btn-sm">
+                <i class="bi bi-box-arrow-up-right"></i>
+                <span>Open Resume</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pillar Cards Grid -->
+        <div class="col-lg-6 reveal-scroll">
+          <div class="row g-3 h-100">
+            <div class="col-sm-6">
+              <div class="glass-panel p-4 h-100">
+                <div class="text-primary mb-3 fs-2"><i class="bi bi-lightning-charge-fill"></i></div>
+                <h4 class="h5 text-main fw-bold mb-2">Modern React Architecture</h4>
+                <p class="text-secondary small mb-0">
+                  Comfortable with functional component composition, standard hooks (useState, useEffect), conditional rendering, and clean props drilling.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="glass-panel p-4 h-100">
+                <div class="text-info mb-3 fs-2"><i class="bi bi-layers-fill"></i></div>
+                <h4 class="h5 text-main fw-bold mb-2">Node.js &amp; APIs</h4>
+                <p class="text-secondary small mb-0">
+                  Constructing RESTful endpoints with Node.js and Express routines, handling JSON payloads, route parameters, and error statuses.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="glass-panel p-4 h-100">
+                <div class="text-warning mb-3 fs-2"><i class="bi bi-phone-fill"></i></div>
+                <h4 class="h5 text-main fw-bold mb-2">Pixel-Perfect Responsive</h4>
+                <p class="text-secondary small mb-0">
+                  Mastery of Bootstrap 5 flex grid systems, fluid typography, and custom CSS media queries ensuring seamless UX on smartphones and desktop monitors.
+                </p>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="glass-panel p-4 h-100">
+                <div class="text-success mb-3 fs-2"><i class="bi bi-git"></i></div>
+                <h4 class="h5 text-main fw-bold mb-2">Git Flow &amp; Deployment</h4>
+                <p class="text-secondary small mb-0">
+                  Proficient with daily Git version control, repository maintenance on GitHub, and continuous automated deployments on platforms like Vercel.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- UNIVERSE SKILLS SECTION -->
+  <section id="universe" class="py-5 position-relative overflow-hidden">
+    <div class="container py-5">
+      <div class="text-center mb-4 reveal-scroll">
+        <span class="text-uppercase tracking-wider small fw-semibold text-gradient code-font">// 02. INTERACTIVE TECH UNIVERSE</span>
+        <h2 class="display-5 fw-bold text-main mt-1">Coding Languages &amp; Planetary Orbits</h2>
+        <p class="text-secondary mx-auto col-md-8 col-lg-6">
+          An interactive, animated solar system of web technologies. <span class="text-main fw-medium">Click any planetary node</span> to inspect practical code proficiency, frameworks, and real application usage.
+        </p>
+
+        <!-- Universe Control Toolbar -->
+        <div class="d-flex justify-content-center align-items-center gap-2 mt-4 flex-wrap">
+          <button id="btnOrbitPause" class="btn btn-sm btn-glass text-main px-3">
+            <i class="bi bi-pause-fill me-1" id="orbitPauseIcon"></i>
+            <span id="orbitPauseText">Pause Rotation</span>
+          </button>
+
+          <div class="btn-group btn-group-sm" role="group">
+            <button type="button" class="btn btn-glass text-main" id="speedSlow">0.5x</button>
+            <button type="button" class="btn btn-glass text-main active" id="speedNormal">1x</button>
+            <button type="button" class="btn btn-glass text-main" id="speedFast">2x</button>
+          </div>
+
+          <button id="btnToggleMatrixView" class="btn btn-sm btn-glass text-main px-3">
+            <i class="bi bi-grid-3x3-gap-fill me-1"></i>
+            <span id="matrixViewText">Matrix Grid View</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="row align-items-center g-4 mt-2">
+        <!-- Interactive Universe Solar Canvas -->
+        <div class="col-lg-8" id="orbitCol">
+          <div class="universe-viewport" id="universeViewport">
+            <!-- Center Core: Full Stack Core Sun -->
+            <div class="universe-core-sun" id="universeSun" title="Full Stack Core System">
+              <i class="bi bi-stars fs-3 mb-1"></i>
+              <span class="code-font fw-bold" style="font-size: 0.72rem;">FULL STACK</span>
+              <span class="small" style="font-size: 0.6rem; opacity: 0.85;">CORE</span>
+            </div>
+
+            <!-- Orbit Tier 1: Core Foundation Languages (Inner) -->
+            <div class="orbit-track track-tier-1">
+              <!-- HTML5 -->
+              <div class="planet-body pos-html active-planet" data-tech="html" title="Inspect HTML5">
+                <div class="counter-rot-1 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="fa-brands fa-html5 text-danger fs-3"></i>
+                </div>
+              </div>
+              <!-- CSS3 -->
+              <div class="planet-body pos-css" data-tech="css" title="Inspect CSS3">
+                <div class="counter-rot-1 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="fa-brands fa-css3-alt text-primary fs-3"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Orbit Tier 2: Dynamic UI Frameworks & Scripting (Middle) -->
+            <div class="orbit-track track-tier-2">
+              <!-- JavaScript -->
+              <div class="planet-body pos-js" data-tech="javascript" title="Inspect JavaScript">
+                <div class="counter-rot-2 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="fa-brands fa-square-js text-warning fs-3"></i>
+                </div>
+              </div>
+              <!-- Bootstrap -->
+              <div class="planet-body pos-bootstrap" data-tech="bootstrap" title="Inspect Bootstrap 5">
+                <div class="counter-rot-2 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="fa-brands fa-bootstrap fs-3" style="color: #9333ea;"></i>
+                </div>
+              </div>
+              <!-- React JS -->
+              <div class="planet-body pos-react" data-tech="react" title="Inspect React JS">
+                <div class="counter-rot-2 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="fa-brands fa-react text-info fs-3"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- Orbit Tier 3: Server, Backend & DevOps (Outer) -->
+            <div class="orbit-track track-tier-3">
+              <!-- Node.js -->
+              <div class="planet-body pos-node" data-tech="nodejs" title="Inspect Node.js">
+                <div class="counter-rot-3 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="fa-brands fa-node-js text-success fs-3"></i>
+                </div>
+              </div>
+              <!-- Express.js -->
+              <div class="planet-body pos-express" data-tech="express" title="Inspect Express.js">
+                <div class="counter-rot-3 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="bi bi-hdd-network-fill text-warning fs-3"></i>
+                </div>
+              </div>
+              <!-- Git -->
+              <div class="planet-body pos-git" data-tech="git" title="Inspect Git">
+                <div class="counter-rot-3 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="fa-brands fa-git-alt text-danger fs-3"></i>
+                </div>
+              </div>
+              <!-- REST APIs -->
+              <div class="planet-body pos-api" data-tech="restapi" title="Inspect REST APIs">
+                <div class="counter-rot-3 d-flex align-items-center justify-content-center w-100 h-100">
+                  <i class="bi bi-arrow-left-right text-cyan fs-4" style="color: #06b6d4;"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fallback/Alternative Grid Matrix View -->
+          <div id="skillsMatrixView" class="d-none">
+            <div class="row g-3">
+              <div class="col-12"><h5 class="text-main fw-bold mb-2">Frontend Stack</h5></div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('html')">
+                  <i class="fa-brands fa-html5 text-danger fs-2"></i>
+                  <div><div class="text-main fw-bold">HTML5</div><div class="text-secondary small">Semantic Architecture</div></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('css')">
+                  <i class="fa-brands fa-css3-alt text-primary fs-2"></i>
+                  <div><div class="text-main fw-bold">CSS3</div><div class="text-secondary small">Flexbox, Grid, Anims</div></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('bootstrap')">
+                  <i class="fa-brands fa-bootstrap fs-2" style="color: #9333ea;"></i>
+                  <div><div class="text-main fw-bold">Bootstrap 5</div><div class="text-secondary small">Responsive Layouts</div></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('javascript')">
+                  <i class="fa-brands fa-square-js text-warning fs-2"></i>
+                  <div><div class="text-main fw-bold">JavaScript (ES6+)</div><div class="text-secondary small">Async &amp; DOM Engine</div></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('react')">
+                  <i class="fa-brands fa-react text-info fs-2"></i>
+                  <div><div class="text-main fw-bold">React JS</div><div class="text-secondary small">Components &amp; Hooks</div></div>
+                </div>
+              </div>
+
+              <div class="col-12 mt-3"><h5 class="text-main fw-bold mb-2">Backend &amp; Infrastructure</h5></div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('nodejs')">
+                  <i class="fa-brands fa-node-js text-success fs-2"></i>
+                  <div><div class="text-main fw-bold">Node.js</div><div class="text-secondary small">Server Runtime</div></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('express')">
+                  <i class="bi bi-hdd-network-fill text-warning fs-2"></i>
+                  <div><div class="text-main fw-bold">Express.js</div><div class="text-secondary small">API Router &amp; Middleware</div></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('restapi')">
+                  <i class="bi bi-arrow-left-right text-cyan fs-2" style="color: #06b6d4;"></i>
+                  <div><div class="text-main fw-bold">REST APIs</div><div class="text-secondary small">JSON Payloads &amp; HTTP</div></div>
+                </div>
+              </div>
+              <div class="col-sm-6 col-md-4">
+                <div class="glass-panel p-3 d-flex align-items-center gap-3 cursor-pointer" onclick="activateTechInspect('git')">
+                  <i class="fa-brands fa-git-alt text-danger fs-2"></i>
+                  <div><div class="text-main fw-bold">Git &amp; GitHub</div><div class="text-secondary small">Branching &amp; Repositories</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Tech HUD Inspection Card -->
+        <div class="col-lg-4">
+          <div class="glass-panel p-4" id="techInspectorHud">
+            <div class="d-flex align-items-center justify-content-between mb-3 pb-3 border-bottom border-secondary border-opacity-25">
+              <div class="d-flex align-items-center gap-3">
+                <div id="hudIcon" class="p-2 rounded-3" style="background: rgba(99, 102, 241, 0.15);">
+                  <i class="fa-brands fa-html5 text-danger fs-2"></i>
+                </div>
+                <div>
+                  <h4 class="h5 text-main fw-bold mb-0" id="hudTitle">HTML5</h4>
+                  <span class="badge bg-primary bg-opacity-20 text-primary border border-primary border-opacity-25" id="hudBadge">Frontend Core</span>
+                </div>
+              </div>
+              <span class="code-font text-info small" id="hudOrbitTier">Orbit 1 (Inner)</span>
+            </div>
+
+            <p class="text-secondary small mb-3" id="hudDescription" style="line-height: 1.7;">
+              Structuring accessible, semantic web documents. Deep knowledge of semantic HTML tags (&lt;header&gt;, &lt;main&gt;, &lt;article&gt;, &lt;section&gt;), meta viewport handling, and SEO-friendly document hierarchy.
+            </p>
+
+            <div class="mb-3">
+              <div class="d-flex justify-content-between text-secondary small mb-1">
+                <span>Implementation Mastery</span>
+                <span class="text-main fw-bold" id="hudProficiencyPercent">92%</span>
+              </div>
+              <div class="progress" style="height: 7px; background: rgba(255, 255, 255, 0.08);">
+                <div id="hudProgressBar" class="progress-bar" style="width: 92%; background: var(--accent-gradient);"></div>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <h6 class="text-main small fw-bold mb-2">Applied Practical Capabilities:</h6>
+              <div class="d-flex flex-wrap gap-2" id="hudTags">
+                <span class="tech-pill">Semantic Elements</span>
+                <span class="tech-pill">Web Accessibility (a11y)</span>
+                <span class="tech-pill">DOM Tree Optimization</span>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-top border-secondary border-opacity-25 text-secondary small code-font text-center">
+              <i class="bi bi-hand-index-thumb text-info me-1"></i> Click any planetary orbit node to inspect
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SHOWCASE SECTION -->
+  <section id="projects" class="py-5 position-relative">
+    <div class="container py-5">
+      <div class="text-center mb-5 reveal-scroll">
+        <span class="text-uppercase tracking-wider small fw-semibold text-gradient code-font">// 03. PRODUCTION DEPLOYMENTS</span>
+        <h2 class="display-5 fw-bold text-main mt-1">Featured Practical Projects</h2>
+        <p class="text-secondary mx-auto col-md-8 col-lg-6">
+          Original live snapshots and interactive mockups of real applications deployed on Vercel. Switch between real site snapshots or test live sandbox previews.
+        </p>
+
+        <!-- Project Filter Buttons -->
+        <div class="d-flex justify-content-center gap-2 mt-4 flex-wrap" id="projectFilterGroup">
+          <button class="btn btn-sm btn-glass text-main px-3 active" data-filter="all">All Projects</button>
+          <button class="btn btn-sm btn-glass text-main px-3" data-filter="fullstack">Web Applications</button>
+          <button class="btn btn-sm btn-glass text-main px-3" data-filter="frontend">Client &amp; UI Replicas</button>
+        </div>
+      </div>
+
+      <div class="row g-4" id="projectCardsContainer">
+        <!-- Project 1: Client Portfolio -->
+        <div class="col-md-6 project-item" data-category="frontend">
+          <div class="glass-panel h-100 d-flex flex-column overflow-hidden">
+            <div class="project-browser-frame justify-content-between">
+              <div class="d-flex align-items-center gap-2 flex-grow-1 overflow-hidden me-2">
+                <span class="browser-dot bg-danger"></span>
+                <span class="browser-dot bg-warning"></span>
+                <span class="browser-dot bg-success"></span>
+                <div class="browser-url-bar"><i class="bi bi-lock-fill text-success me-1"></i>https://mihir-portfilio.vercel.app</div>
+              </div>
+              <div class="d-flex gap-1 flex-shrink-0">
+                <button type="button" class="preview-mode-toggle active-mode" onclick="toggleProjectView(this, 'img', 'p1')">Snapshot</button>
+                <button type="button" class="preview-mode-toggle" onclick="toggleProjectView(this, 'frame', 'p1', 'https://mihir-portfilio.vercel.app')">Live Sandbox</button>
+              </div>
+            </div>
+
+            <!-- Authentic Live Capture -->
+            <div class="project-image-box" id="p1-img-box">
+              <img src="https://image.thum.io/get/width/1200/crop/800/noanimate/https://mihir-portfilio.vercel.app" 
+                   alt="Authentic Live Screen Capture of Mihir Client Portfolio" 
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='https://api.microlink.io/?url=https%3A%2F%2Fmihir-portfilio.vercel.app&screenshot=true&meta=false&embed=screenshot.url';" />
+              <div class="project-overlay"></div>
+            </div>
+
+            <!-- Live Sandbox Container -->
+            <div class="project-iframe-container" id="p1-frame-box"></div>
+
+            <div class="p-4 d-flex flex-column flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge bg-primary bg-opacity-15 text-primary border border-primary border-opacity-25">Client Deliverable</span>
+                <span class="code-font text-muted small"><i class="bi bi-check2-all text-success me-1"></i>Live on Vercel</span>
+              </div>
+
+              <h3 class="h4 text-main fw-bold mb-2">Client Portfolio</h3>
+              <p class="text-secondary small mb-4 flex-grow-1">
+                A custom personal portfolio website created for a real-world client. Features dark-themed sleek aesthetics, smooth section transitions, dynamic skill breakdowns, project galleries, and cross-browser responsiveness.
+              </p>
+
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                <span class="tech-pill">HTML5</span>
+                <span class="tech-pill">CSS3 Glassmorphism</span>
+                <span class="tech-pill">JavaScript ES6+</span>
+                <span class="tech-pill">Bootstrap 5</span>
+                <span class="tech-pill">Vercel</span>
+              </div>
+
+              <div class="pt-3 border-top border-secondary border-opacity-25 d-flex gap-2">
+                <a href="https://mihir-portfilio.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-gradient w-100 justify-content-center">
+                  <span>Launch Live Site</span>
+                  <i class="bi bi-box-arrow-up-right fs-6"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2: Restaurant Project -->
+        <div class="col-md-6 project-item" data-category="fullstack">
+          <div class="glass-panel h-100 d-flex flex-column overflow-hidden">
+            <div class="project-browser-frame justify-content-between">
+              <div class="d-flex align-items-center gap-2 flex-grow-1 overflow-hidden me-2">
+                <span class="browser-dot bg-danger"></span>
+                <span class="browser-dot bg-warning"></span>
+                <span class="browser-dot bg-success"></span>
+                <div class="browser-url-bar"><i class="bi bi-lock-fill text-success me-1"></i>https://restaurant-project-gamma-flame.vercel.app</div>
+              </div>
+              <div class="d-flex gap-1 flex-shrink-0">
+                <button type="button" class="preview-mode-toggle active-mode" onclick="toggleProjectView(this, 'img', 'p2')">Snapshot</button>
+                <button type="button" class="preview-mode-toggle" onclick="toggleProjectView(this, 'frame', 'p2', 'https://restaurant-project-gamma-flame.vercel.app')">Live Sandbox</button>
+              </div>
+            </div>
+
+            <!-- Authentic Live Capture -->
+            <div class="project-image-box" id="p2-img-box">
+              <img src="https://image.thum.io/get/width/1200/crop/800/noanimate/https://restaurant-project-gamma-flame.vercel.app" 
+                   alt="Authentic Live Screen Capture of Restaurant Web Project" 
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='https://api.microlink.io/?url=https%3A%2F%2Frestaurant-project-gamma-flame.vercel.app&screenshot=true&meta=false&embed=screenshot.url';" />
+              <div class="project-overlay"></div>
+            </div>
+
+            <!-- Live Sandbox Container -->
+            <div class="project-iframe-container" id="p2-frame-box"></div>
+
+            <div class="p-4 d-flex flex-column flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge bg-warning bg-opacity-15 text-warning border border-warning border-opacity-25">Extra Work Project</span>
+                <span class="code-font text-muted small"><i class="bi bi-check2-all text-success me-1"></i>Live on Vercel</span>
+              </div>
+
+              <h3 class="h4 text-main fw-bold mb-2">Restaurant Project</h3>
+              <p class="text-secondary small mb-4 flex-grow-1">
+                A rich culinary hospitality web platform. Includes an interactive digital dining menu with categorized specialty items, table reservation interface, gourmet photography showcases, and touch-optimized mobile viewing.
+              </p>
+
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                <span class="tech-pill">Frontend Architecture</span>
+                <span class="tech-pill">CSS Animations</span>
+                <span class="tech-pill">JavaScript</span>
+                <span class="tech-pill">Interactive Menu</span>
+                <span class="tech-pill">Vercel</span>
+              </div>
+
+              <div class="pt-3 border-top border-secondary border-opacity-25 d-flex gap-2">
+                <a href="https://restaurant-project-gamma-flame.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-gradient w-100 justify-content-center">
+                  <span>Launch Live Site</span>
+                  <i class="bi bi-box-arrow-up-right fs-6"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3: Student Management System -->
+        <div class="col-md-6 project-item" data-category="fullstack">
+          <div class="glass-panel h-100 d-flex flex-column overflow-hidden">
+            <div class="project-browser-frame justify-content-between">
+              <div class="d-flex align-items-center gap-2 flex-grow-1 overflow-hidden me-2">
+                <span class="browser-dot bg-danger"></span>
+                <span class="browser-dot bg-warning"></span>
+                <span class="browser-dot bg-success"></span>
+                <div class="browser-url-bar"><i class="bi bi-lock-fill text-success me-1"></i>https://student-management-system-tau-lilac.vercel.app</div>
+              </div>
+              <div class="d-flex gap-1 flex-shrink-0">
+                <button type="button" class="preview-mode-toggle active-mode" onclick="toggleProjectView(this, 'img', 'p3')">Snapshot</button>
+                <button type="button" class="preview-mode-toggle" onclick="toggleProjectView(this, 'frame', 'p3', 'https://student-management-system-tau-lilac.vercel.app')">Live Sandbox</button>
+              </div>
+            </div>
+
+            <!-- Authentic Live Capture -->
+            <div class="project-image-box" id="p3-img-box">
+              <img src="https://image.thum.io/get/width/1200/crop/800/noanimate/https://student-management-system-tau-lilac.vercel.app" 
+                   alt="Authentic Live Screen Capture of Student Management System" 
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='https://api.microlink.io/?url=https%3A%2F%2Fstudent-management-system-tau-lilac.vercel.app&screenshot=true&meta=false&embed=screenshot.url';" />
+              <div class="project-overlay"></div>
+            </div>
+
+            <!-- Live Sandbox Container -->
+            <div class="project-iframe-container" id="p3-frame-box"></div>
+
+            <div class="p-4 d-flex flex-column flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge bg-success bg-opacity-15 text-success border border-success border-opacity-25">Web Application</span>
+                <span class="code-font text-muted small"><i class="bi bi-check2-all text-success me-1"></i>Live on Vercel</span>
+              </div>
+
+              <h3 class="h4 text-main fw-bold mb-2">Student Management System</h3>
+              <p class="text-secondary small mb-4 flex-grow-1">
+                A structured administrative web portal designed to organize student rosters, course assignments, performance entries, and attendance records. Engineered with clear CRUD workflows and real-time form validation.
+              </p>
+
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                <span class="tech-pill">CRUD Operations</span>
+                <span class="tech-pill">JavaScript ES6+</span>
+                <span class="tech-pill">Bootstrap 5</span>
+                <span class="tech-pill">Data Forms</span>
+                <span class="tech-pill">Vercel</span>
+              </div>
+
+              <div class="pt-3 border-top border-secondary border-opacity-25 d-flex gap-2">
+                <a href="https://student-management-system-tau-lilac.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-gradient w-100 justify-content-center">
+                  <span>Launch Live Site</span>
+                  <i class="bi bi-box-arrow-up-right fs-6"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4: Netflix Clone (Home Page) -->
+        <div class="col-md-6 project-item" data-category="frontend">
+          <div class="glass-panel h-100 d-flex flex-column overflow-hidden">
+            <div class="project-browser-frame justify-content-between">
+              <div class="d-flex align-items-center gap-2 flex-grow-1 overflow-hidden me-2">
+                <span class="browser-dot bg-danger"></span>
+                <span class="browser-dot bg-warning"></span>
+                <span class="browser-dot bg-success"></span>
+                <div class="browser-url-bar"><i class="bi bi-lock-fill text-success me-1"></i>https://netflix-pr.vercel.app</div>
+              </div>
+              <div class="d-flex gap-1 flex-shrink-0">
+                <button type="button" class="preview-mode-toggle active-mode" onclick="toggleProjectView(this, 'img', 'p4')">Snapshot</button>
+                <button type="button" class="preview-mode-toggle" onclick="toggleProjectView(this, 'frame', 'p4', 'https://netflix-pr.vercel.app')">Live Sandbox</button>
+              </div>
+            </div>
+
+            <!-- Authentic Live Capture -->
+            <div class="project-image-box" id="p4-img-box">
+              <img src="https://image.thum.io/get/width/1200/crop/800/noanimate/https://netflix-pr.vercel.app" 
+                   alt="Authentic Live Screen Capture of Netflix Clone Project" 
+                   loading="lazy"
+                   onerror="this.onerror=null; this.src='https://api.microlink.io/?url=https%3A%2F%2Fnetflix-pr.vercel.app&screenshot=true&meta=false&embed=screenshot.url';" />
+              <div class="project-overlay"></div>
+            </div>
+
+            <!-- Live Sandbox Container -->
+            <div class="project-iframe-container" id="p4-frame-box"></div>
+
+            <div class="p-4 d-flex flex-column flex-grow-1">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="badge bg-danger bg-opacity-15 text-danger border border-danger border-opacity-25">Streaming UI Clone</span>
+                <span class="code-font text-muted small"><i class="bi bi-check2-all text-success me-1"></i>Live on Vercel</span>
+              </div>
+
+              <h3 class="h4 text-main fw-bold mb-2">Netflix Clone (Home Page)</h3>
+              <p class="text-secondary small mb-4 flex-grow-1">
+                A high-precision recreational replica of Netflix's landmark streaming home interface. Showcases heroic video backdrop banners, interactive horizontal media slider rails, FAQ accordions, and refined branding aesthetics.
+              </p>
+
+              <div class="d-flex flex-wrap gap-2 mb-4">
+                <span class="tech-pill">Responsive Carousel</span>
+                <span class="tech-pill">CSS Flexbox / Grid</span>
+                <span class="tech-pill">HTML5 Video UI</span>
+                <span class="tech-pill">UX Replication</span>
+                <span class="tech-pill">Vercel</span>
+              </div>
+
+              <div class="pt-3 border-top border-secondary border-opacity-25 d-flex gap-2">
+                <a href="https://netflix-pr.vercel.app" target="_blank" rel="noopener noreferrer" class="btn-gradient w-100 justify-content-center">
+                  <span>Launch Live Site</span>
+                  <i class="bi bi-box-arrow-up-right fs-6"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE CLI TERMINAL SECTION -->
+  <section id="terminal" class="py-5 position-relative">
+    <div class="container py-5">
+      <div class="text-center mb-5 reveal-scroll">
+        <span class="text-uppercase tracking-wider small fw-semibold text-gradient code-font">// 04. INTERACTIVE CLI</span>
+        <h2 class="display-5 fw-bold text-main mt-1">Developer Shell Terminal</h2>
+        <p class="text-secondary mx-auto col-md-8 col-lg-6">
+          Prefer command line interfaces? Type commands or click the shortcut buttons below to query skills, contacts, and resume data.
+        </p>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-10 reveal-scroll">
+          <div class="cli-terminal">
+            <!-- Terminal Header -->
+            <div class="d-flex align-items-center justify-content-between px-3 py-2 bg-black bg-opacity-40 border-bottom border-secondary border-opacity-25">
+              <div class="d-flex align-items-center gap-2">
+                <span class="browser-dot bg-danger"></span>
+                <span class="browser-dot bg-warning"></span>
+                <span class="browser-dot bg-success"></span>
+                <span class="code-font text-muted ms-2 small">bash - naivil@terminal:~</span>
+              </div>
+              <span class="badge bg-secondary bg-opacity-20 text-muted code-font small">v1.2.0-zsh</span>
+            </div>
+
+            <!-- Terminal Output Area -->
+            <div class="cli-screen" id="cliOutput">
+              <div class="text-secondary mb-1">Welcome to Naivil Kotak's Interactive Portfolio Shell!</div>
+              <div class="text-secondary mb-3">Type <span class="text-warning">help</span> to list all commands or use the shortcut buttons below.</div>
+              <div class="text-info">[naivil@portfolio ~]$ system-info</div>
+              <div class="text-muted mb-2">&gt; Status: Ready to build and deploy. Junior Full Stack Developer.</div>
+            </div>
+
+            <!-- Preset Command Quick Chips -->
+            <div class="d-flex gap-2 p-2 bg-black bg-opacity-25 border-top border-secondary border-opacity-25 flex-wrap">
+              <span class="text-muted small code-font me-1 align-self-center">Quick commands:</span>
+              <button class="btn btn-sm btn-glass text-main py-1 px-2 code-font small" onclick="runCliCommand('skills')">skills</button>
+              <button class="btn btn-sm btn-glass text-main py-1 px-2 code-font small" onclick="runCliCommand('projects')">projects</button>
+              <button class="btn btn-sm btn-glass text-main py-1 px-2 code-font small" onclick="runCliCommand('resume')">resume</button>
+              <button class="btn btn-sm btn-glass text-main py-1 px-2 code-font small" onclick="runCliCommand('contact')">contact</button>
+              <button class="btn btn-sm btn-glass text-main py-1 px-2 code-font small" onclick="runCliCommand('clear')">clear</button>
+            </div>
+
+            <!-- Interactive Command Input Line -->
+            <form id="cliForm" class="cli-input-line">
+              <span class="code-font text-success me-2 fw-bold">naivil&gt;</span>
+              <input type="text" id="cliInput" class="form-control bg-transparent text-main border-0 shadow-none code-font p-0" placeholder="Type a command (e.g. skills, projects, contact, resume, help)..." autocomplete="off" />
+              <button type="submit" class="btn btn-sm btn-gradient px-3 py-1 ms-2">Enter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="py-5 position-relative">
+    <div class="container py-5">
+      <div class="text-center mb-5 reveal-scroll">
+        <span class="text-uppercase tracking-wider small fw-semibold text-gradient code-font">// 05. DIRECT CHANNELS</span>
+        <h2 class="display-5 fw-bold text-main mt-1">Get In Touch &amp; Hire Me</h2>
+        <p class="text-secondary mx-auto col-md-8 col-lg-6">
+          Ready to discuss junior developer roles, project inquiries, or team collaborations. Choose your preferred channel below.
+        </p>
+      </div>
+
+      <div class="row g-4 align-items-stretch">
+        <!-- Direct Contact Cards Column -->
+        <div class="col-lg-5 reveal-scroll">
+          <div class="d-flex flex-column gap-3 h-100 justify-content-between">
+            <!-- Direct Phone -->
+            <a href="tel:9409004851" class="glass-panel p-4 text-decoration-none d-flex align-items-center gap-3">
+              <div class="p-3 rounded-3 flex-shrink-0" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">
+                <i class="bi bi-telephone-outbound-fill fs-4"></i>
+              </div>
+              <div class="text-truncate">
+                <div class="text-secondary small">Direct Phone &amp; WhatsApp</div>
+                <div class="text-main fw-bold fs-5">+91 9409004851</div>
+              </div>
+              <i class="bi bi-arrow-up-right text-muted ms-auto fs-5"></i>
+            </a>
+
+            <!-- Direct Email -->
+            <a href="mailto:kotaknaivil599@gmail.com" class="glass-panel p-4 text-decoration-none d-flex align-items-center gap-3">
+              <div class="p-3 rounded-3 flex-shrink-0" style="background: rgba(99, 102, 241, 0.15); color: var(--primary-accent);">
+                <i class="bi bi-envelope-check-fill fs-4"></i>
+              </div>
+              <div class="text-truncate">
+                <div class="text-secondary small">Email Address</div>
+                <div class="text-main fw-bold fs-6 text-truncate">kotaknaivil599@gmail.com</div>
+              </div>
+              <i class="bi bi-arrow-up-right text-muted ms-auto fs-5"></i>
+            </a>
+
+            <!-- LinkedIn -->
+            <a href="https://www.linkedin.com/in/naivil-kotak" target="_blank" rel="noopener noreferrer" class="glass-panel p-4 text-decoration-none d-flex align-items-center gap-3">
+              <div class="p-3 rounded-3 flex-shrink-0" style="background: rgba(14, 165, 233, 0.15); color: #0ea5e9;">
+                <i class="bi bi-linkedin fs-4"></i>
+              </div>
+              <div class="text-truncate">
+                <div class="text-secondary small">Professional Network</div>
+                <div class="text-main fw-bold">linkedin.com/in/naivil-kotak</div>
+              </div>
+              <i class="bi bi-box-arrow-up-right text-muted ms-auto fs-5"></i>
+            </a>
+
+            <!-- GitHub -->
+            <a href="https://github.com/naivil" target="_blank" rel="noopener noreferrer" class="glass-panel p-4 text-decoration-none d-flex align-items-center gap-3">
+              <div class="p-3 rounded-3 flex-shrink-0" style="background: rgba(148, 163, 184, 0.15); color: var(--text-main);">
+                <i class="bi bi-github fs-4"></i>
+              </div>
+              <div class="text-truncate">
+                <div class="text-secondary small">Source Code Repositories</div>
+                <div class="text-main fw-bold">github.com/naivil</div>
+              </div>
+              <i class="bi bi-box-arrow-up-right text-muted ms-auto fs-5"></i>
+            </a>
+
+            <!-- Resume Link Card -->
+            <a href="https://drive.google.com/file/d/1QH_HhUPcuGi46SkKY8VDofnO3KnYL9ns/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="glass-panel p-4 text-decoration-none d-flex align-items-center gap-3">
+              <div class="p-3 rounded-3 flex-shrink-0" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;">
+                <i class="bi bi-file-earmark-pdf-fill fs-4"></i>
+              </div>
+              <div class="text-truncate">
+                <div class="text-secondary small">Candidate Curriculum Vitae</div>
+                <div class="text-main fw-bold">View Resume on Google Drive</div>
+              </div>
+              <i class="bi bi-box-arrow-up-right text-muted ms-auto fs-5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Validated Contact Form Column -->
+        <div class="col-lg-7 reveal-scroll">
+          <div class="glass-panel p-4 p-md-5 h-100">
+            <h3 class="h4 text-main fw-bold mb-2">Send a Direct Message</h3>
+            <p class="text-secondary small mb-4">
+              Have an opening, an inquiry, or an invitation to interview? Complete the form and I will follow up promptly.
+            </p>
+
+            <div id="contactFormStatus" class="alert d-none" role="alert"></div>
+
+            <form id="contactForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="formSenderName" class="form-label text-secondary small">Your Name <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control bg-transparent text-main border-secondary border-opacity-50 py-2" id="formSenderName" placeholder="e.g. Priyanshu Sharma" required />
+                  <div class="invalid-feedback small">Please provide your name.</div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="formSenderEmail" class="form-label text-secondary small">Your Email <span class="text-danger">*</span></label>
+                  <input type="email" class="form-control bg-transparent text-main border-secondary border-opacity-50 py-2" id="formSenderEmail" placeholder="e.g. priyanshu@example.com" required />
+                  <div class="invalid-feedback small">Please enter a valid email address.</div>
+                </div>
+
+                <div class="col-12">
+                  <label for="formSubject" class="form-label text-secondary small">Subject</label>
+                  <input type="text" class="form-control bg-transparent text-main border-secondary border-opacity-50 py-2" id="formSubject" placeholder="Junior Full Stack Opportunity / Portfolio Discussion" />
+                </div>
+
+                <div class="col-12">
+                  <label for="formMessage" class="form-label text-secondary small">Message <span class="text-danger">*</span></label>
+                  <textarea class="form-control bg-transparent text-main border-secondary border-opacity-50 py-2" id="formMessage" rows="5" placeholder="Hi Naivil, we reviewed your projects and would like to discuss an opportunity..." required></textarea>
+                  <div class="invalid-feedback small">Please enter your message.</div>
+                </div>
+
+                <div class="col-12 pt-2">
+                  <button type="submit" class="btn-gradient w-100 justify-content-center py-3">
+                    <i class="bi bi-send-fill fs-5"></i>
+                    <span class="fs-6">Transmit Message</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-5 border-top border-secondary border-opacity-25 position-relative">
+    <div class="container">
+      <div class="row align-items-center gy-4">
+        <div class="col-md-6 text-center text-md-start">
+          <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2 mb-2">
+            <span class="d-inline-flex align-items-center justify-content-center rounded-2 text-white fw-bold small" 
+                  style="width: 30px; height: 30px; background: var(--accent-gradient);">
+              NK
+            </span>
+            <span class="fw-bold text-main brand-font fs-5">Naivil Kotak</span>
+          </div>
+          <p class="text-secondary small mb-1">
+            Full Stack Web Developer &bull; HTML5 &bull; CSS3 &bull; Bootstrap 5 &bull; JavaScript &bull; React &bull; Node.js
+          </p>
+          <div class="code-font text-muted small d-flex align-items-center justify-content-center justify-content-md-start gap-2">
+            <i class="bi bi-clock-history text-info"></i>
+            <span>Local Time: <span id="localClock">--:--:--</span></span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center justify-content-md-end align-items-center gap-3">
+            <a href="tel:9409004851" class="btn btn-sm btn-glass text-secondary" title="Call Naivil">
+              <i class="bi bi-telephone text-success"></i>
+            </a>
+            <a href="mailto:kotaknaivil599@gmail.com" class="btn btn-sm btn-glass text-secondary" title="Email Naivil">
+              <i class="bi bi-envelope text-primary"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/naivil-kotak" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass text-secondary" title="LinkedIn">
+              <i class="bi bi-linkedin text-info"></i>
+            </a>
+            <a href="https://github.com/naivil" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass text-secondary" title="GitHub">
+              <i class="bi bi-github text-main"></i>
+            </a>
+            <a href="https://drive.google.com/file/d/1QH_HhUPcuGi46SkKY8VDofnO3KnYL9ns/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-glass text-secondary" title="Google Drive Resume">
+              <i class="bi bi-file-earmark-pdf text-danger"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4 pt-3 border-top border-secondary border-opacity-10">
+        <span class="text-muted small">&copy; <span id="currentYear"></span> Naivil Kotak. Built with vanilla JavaScript, modern CSS3 &amp; Bootstrap 5.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button id="btnScrollTop" class="btn-gradient position-fixed" style="bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; display: none; z-index: 99; padding: 0; align-items: center; justify-content: center;" title="Back to top" aria-label="Back to top">
+    <i class="bi bi-arrow-up fs-5"></i>
+  </button>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    /* ========================================================
+       1. THEME PERSISTENCE ENGINE (DARK/LIGHT)
+       ======================================================== */
+    const rootHtml = document.documentElement;
+    const themeBtnDesktop = document.getElementById('themeToggleDesktop');
+    const themeBtnMobile = document.getElementById('themeToggleMobile');
+    const themeIconDesktop = document.getElementById('themeIconDesktop');
+    const themeIconMobile = document.getElementById('themeIconMobile');
+
+    function applyActiveTheme(themeName) {
+      rootHtml.setAttribute('data-bs-theme', themeName);
+      localStorage.setItem('nk_preferred_theme', themeName);
+
+      const isDark = themeName === 'dark';
+      const iconClass = isDark ? 'bi bi-moon-stars-fill fs-6' : 'bi bi-sun-fill fs-6 text-warning';
+
+      if (themeIconDesktop) themeIconDesktop.className = iconClass;
+      if (themeIconMobile) themeIconMobile.className = iconClass;
+    }
+
+    const cachedTheme = localStorage.getItem('nk_preferred_theme') || 'dark';
+    applyActiveTheme(cachedTheme);
+
+    function toggleCurrentTheme() {
+      const active = rootHtml.getAttribute('data-bs-theme');
+      applyActiveTheme(active === 'dark' ? 'light' : 'dark');
+    }
+
+    if (themeBtnDesktop) themeBtnDesktop.addEventListener('click', toggleCurrentTheme);
+    if (themeBtnMobile) themeBtnMobile.addEventListener('click', toggleCurrentTheme);
+
+
+    /* ========================================================
+       2. CONSTELLATION PARTICLE CANVAS ENGINE (HERO)
+       ======================================================== */
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+    let mousePos = { x: null, y: null, radius: 140 };
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      initParticles();
+    }
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', (e) => {
+      mousePos.x = e.x;
+      mousePos.y = e.y;
+    });
+
+    class Particle {
+      constructor(x, y, dx, dy, size) {
+        this.x = x;
+        this.y = y;
+        this.dx = dx;
+        this.dy = dy;
+        this.size = size;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+        ctx.fillStyle = 'rgba(99, 102, 241, 0.7)';
+        ctx.fill();
+      }
+      update() {
+        if (this.x > canvas.width || this.x < 0) this.dx = -this.dx;
+        if (this.y > canvas.height || this.y < 0) this.dy = -this.dy;
+
+        // Interaction with mouse
+        const distX = mousePos.x - this.x;
+        const distY = mousePos.y - this.y;
+        const distance = Math.sqrt(distX * distX + distY * distY);
+        if (distance < mousePos.radius) {
+          if (mousePos.x < this.x && this.x < canvas.width - 10) this.x += 1.5;
+          if (mousePos.x > this.x && this.x > 10) this.x -= 1.5;
+          if (mousePos.y < this.y && this.y < canvas.height - 10) this.y += 1.5;
+          if (mousePos.y > this.y && this.y > 10) this.y -= 1.5;
+        }
+
+        this.x += this.dx;
+        this.y += this.dy;
+        this.draw();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      const numberOfParticles = Math.floor((canvas.width * canvas.height) / 12000);
+      for (let i = 0; i < numberOfParticles; i++) {
+        const size = Math.random() * 2 + 1;
+        const x = Math.random() * (canvas.width - size * 2) + size;
+        const y = Math.random() * (canvas.height - size * 2) + size;
+        const dx = (Math.random() - 0.5) * 0.9;
+        const dy = (Math.random() - 0.5) * 0.9;
+        particlesArray.push(new Particle(x, y, dx, dy, size));
+      }
+    }
+
+    function connectParticles() {
+      for (let a = 0; a < particlesArray.length; a++) {
+        for (let b = a; b < particlesArray.length; b++) {
+          const distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+                           ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+          if (distance < (canvas.width / 8) * (canvas.height / 8)) {
+            const opacity = 1 - (distance / 20000);
+            ctx.strokeStyle = `rgba(99, 102, 241, ${opacity * 0.25})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animateParticles() {
+      requestAnimationFrame(animateParticles);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+      }
+      connectParticles();
+    }
+
+    window.addEventListener('load', () => {
+      resizeCanvas();
+      animateParticles();
+    });
+
+
+    /* ========================================================
+       3. TYPEWRITER EFFECT (HERO)
+       ======================================================== */
+    const roleTitles = [
+      "Full Stack Developer",
+      "React JS & Node.js Developer",
+      "Modern Web Applications",
+      "Continuous Code Learner"
+    ];
+    let rIdx = 0, cIdx = 0, isDeletingText = false;
+    const roleEl = document.getElementById('roleTypewriter');
+
+    function handleRoleTyping() {
+      const activeTitle = roleTitles[rIdx];
+      if (isDeletingText) {
+        roleEl.textContent = activeTitle.substring(0, cIdx - 1);
+        cIdx--;
+      } else {
+        roleEl.textContent = activeTitle.substring(0, cIdx + 1);
+        cIdx++;
+      }
+
+      let typingSpeed = isDeletingText ? 35 : 75;
+
+      if (!isDeletingText && cIdx === activeTitle.length) {
+        typingSpeed = 2000;
+        isDeletingText = true;
+      } else if (isDeletingText && cIdx === 0) {
+        isDeletingText = false;
+        rIdx = (rIdx + 1) % roleTitles.length;
+        typingSpeed = 350;
+      }
+
+      setTimeout(handleRoleTyping, typingSpeed);
+    }
+    handleRoleTyping();
+
+
+    /* ========================================================
+       4. 3D CARD MOUSE TILT EFFECT
+       ======================================================== */
+    const tiltCard = document.getElementById('heroTiltTarget');
+    if (tiltCard) {
+      tiltCard.addEventListener('mousemove', (e) => {
+        const rect = tiltCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -12;
+        const rotateY = ((x - centerX) / centerX) * 12;
+        tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      tiltCard.addEventListener('mouseleave', () => {
+        tiltCard.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg)`;
+      });
+    }
+
+
+    /* ========================================================
+       5. UNIVERSE ORBIT TECH DATA & HUD ENGINE
+       ======================================================== */
+    const techEcosystem = {
+      html: {
+        name: "HTML5",
+        category: "Frontend Core",
+        tier: "Orbit 1 (Inner)",
+        icon: '<i class="fa-brands fa-html5 text-danger fs-2"></i>',
+        desc: "Semantic and accessible web document structure. Strong knowledge of semantic tags, meta viewport configurations, SEO friendliness, and clean accessible DOM trees.",
+        proficiency: "92%",
+        tags: ["Semantic Hierarchy", "SEO Optimization", "Accessibility (WCAG)", "Mobile Viewport"]
+      },
+      css: {
+        name: "CSS3",
+        category: "Frontend Core",
+        tier: "Orbit 1 (Inner)",
+        icon: '<i class="fa-brands fa-css3-alt text-primary fs-2"></i>',
+        desc: "Modern stylesheet engineering. Proficient with CSS Flexbox, Grid systems, custom properties (CSS variables), keyframe animations, and fluid media queries.",
+        proficiency: "88%",
+        tags: ["Flexbox & Grid", "Keyframe Animations", "Glassmorphism", "Responsive Layouts"]
+      },
+      bootstrap: {
+        name: "Bootstrap 5",
+        category: "UI Framework",
+        tier: "Orbit 2 (Middle)",
+        icon: '<i class="fa-brands fa-bootstrap fs-2" style="color: #9333ea;"></i>',
+        desc: "Rapid responsive prototyping using Bootstrap 5 utility classes, responsive grid breakpoints, modal components, offcanvas drawers, and theme customization.",
+        proficiency: "90%",
+        tags: ["Grid System (12-col)", "Utility Classes", "Modal & Offcanvas", "Responsive Breakpoints"]
+      },
+      javascript: {
+        name: "JavaScript (ES6+)",
+        category: "Core Language",
+        tier: "Orbit 2 (Middle)",
+        icon: '<i class="fa-brands fa-square-js text-warning fs-2"></i>',
+        desc: "Core browser programming with modern ES6+ syntax. Experienced in DOM manipulation, asynchronous programming (Promises, Async/Await), Event Listeners, and Array methods.",
+        proficiency: "84%",
+        tags: ["Async / Await & Fetch", "DOM Manipulation", "ES6+ Modules", "Event Delegation"]
+      },
+      react: {
+        name: "React JS",
+        category: "Frontend Framework",
+        tier: "Orbit 2 (Middle)",
+        icon: '<i class="fa-brands fa-react text-info fs-2"></i>',
+        desc: "Component-based web architecture. Proficient in functional components, state management using React Hooks (useState, useEffect), passing props, and conditional UI rendering.",
+        proficiency: "80%",
+        tags: ["Functional Components", "React Hooks", "State & Props", "Virtual DOM"]
+      },
+      nodejs: {
+        name: "Node.js",
+        category: "Backend Runtime",
+        tier: "Orbit 3 (Outer)",
+        icon: '<i class="fa-brands fa-node-js text-success fs-2"></i>',
+        desc: "Server-side JavaScript environment for building RESTful web services. Understanding of NPM packages, Express-style routing, HTTP requests, and basic server architectures.",
+        proficiency: "75%",
+        tags: ["Event Loop Runtime", "NPM Package Ecosystem", "Server Logic", "JSON Responses"]
+      },
+      express: {
+        name: "Express.js",
+        category: "Backend Framework",
+        tier: "Orbit 3 (Outer)",
+        icon: '<i class="bi bi-hdd-network-fill text-warning fs-2"></i>',
+        desc: "Fast, unopinionated web framework for Node.js. Experience setting up modular router endpoints, middleware pipelines, CORS configuration, and request body parsing.",
+        proficiency: "74%",
+        tags: ["Middleware Pipelines", "Routing Mechanics", "CORS & Headers", "Error Handling"]
+      },
+      git: {
+        name: "Git & GitHub",
+        category: "Version Control",
+        tier: "Orbit 3 (Outer)",
+        icon: '<i class="fa-brands fa-git-alt text-danger fs-2"></i>',
+        desc: "Daily source control management. Knowledge of commit histories, feature branches, merging, pull requests, resolving basic merge conflicts, and hosting repositories on GitHub.",
+        proficiency: "82%",
+        tags: ["Branching & Merging", "Commit Conventions", "GitHub Remote Repos", "Code Collaboration"]
+      },
+      restapi: {
+        name: "REST APIs",
+        category: "Integration Architecture",
+        tier: "Orbit 3 (Outer)",
+        icon: '<i class="bi bi-arrow-left-right text-cyan fs-2" style="color: #06b6d4;"></i>',
+        desc: "Designing and consuming standard RESTful web endpoints with HTTP methods (GET, POST, PUT, DELETE), JSON payload parsing, status code handling, and error validation.",
+        proficiency: "80%",
+        tags: ["HTTP Verbs (CRUD)", "JSON Serialization", "Status Code Handling", "Fetch API Integration"]
+      }
+    };
+
+    function activateTechInspect(key) {
+      const data = techEcosystem[key];
+      if (!data) return;
+
+      document.getElementById('hudIcon').innerHTML = data.icon;
+      document.getElementById('hudTitle').textContent = data.name;
+      document.getElementById('hudBadge').textContent = data.category;
+      document.getElementById('hudOrbitTier').textContent = data.tier;
+      document.getElementById('hudDescription').textContent = data.desc;
+      document.getElementById('hudProficiencyPercent').textContent = data.proficiency;
+      document.getElementById('hudProgressBar').style.width = data.proficiency;
+
+      const tagsBox = document.getElementById('hudTags');
+      tagsBox.innerHTML = '';
+      data.tags.forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'tech-pill';
+        span.textContent = t;
+        tagsBox.appendChild(span);
+      });
+
+      // Highlight active planet node
+      document.querySelectorAll('.planet-body').forEach(p => {
+        if (p.getAttribute('data-tech') === key) {
+          p.classList.add('active-planet');
+        } else {
+          p.classList.remove('active-planet');
+        }
+      });
+    }
+
+    // Attach planet click events
+    document.querySelectorAll('.planet-body').forEach(planet => {
+      planet.addEventListener('click', () => {
+        const tech = planet.getAttribute('data-tech');
+        activateTechInspect(tech);
+      });
+    });
+
+    // Orbit Pause / Resume
+    const universeViewport = document.getElementById('universeViewport');
+    const btnOrbitPause = document.getElementById('btnOrbitPause');
+    const orbitPauseIcon = document.getElementById('orbitPauseIcon');
+    const orbitPauseText = document.getElementById('orbitPauseText');
+    let isOrbitFrozen = false;
+
+    btnOrbitPause.addEventListener('click', () => {
+      isOrbitFrozen = !isOrbitFrozen;
+      if (isOrbitFrozen) {
+        universeViewport.classList.add('universe-paused');
+        orbitPauseIcon.className = 'bi bi-play-fill me-1';
+        orbitPauseText.textContent = 'Resume Rotation';
+      } else {
+        universeViewport.classList.remove('universe-paused');
+        orbitPauseIcon.className = 'bi bi-pause-fill me-1';
+        orbitPauseText.textContent = 'Pause Rotation';
+      }
+    });
+
+    // Orbit Speed Adjusters
+    const speedButtons = [
+      { el: document.getElementById('speedSlow'), s1: '48s', s2: '68s', s3: '88s' },
+      { el: document.getElementById('speedNormal'), s1: '24s', s2: '34s', s3: '44s' },
+      { el: document.getElementById('speedFast'), s1: '12s', s2: '17s', s3: '22s' }
+    ];
+
+    speedButtons.forEach(btnConfig => {
+      btnConfig.el.addEventListener('click', () => {
+        speedButtons.forEach(b => b.el.classList.remove('active'));
+        btnConfig.el.classList.add('active');
+
+        document.documentElement.style.setProperty('--orbit-speed-1', btnConfig.s1);
+        document.documentElement.style.setProperty('--orbit-speed-2', btnConfig.s2);
+        document.documentElement.style.setProperty('--orbit-speed-3', btnConfig.s3);
+      });
+    });
+
+    // Matrix View Toggle
+    const btnToggleMatrixView = document.getElementById('btnToggleMatrixView');
+    const skillsMatrixView = document.getElementById('skillsMatrixView');
+    const matrixViewText = document.getElementById('matrixViewText');
+    let isMatrixActive = false;
+
+    btnToggleMatrixView.addEventListener('click', () => {
+      isMatrixActive = !isMatrixActive;
+      if (isMatrixActive) {
+        universeViewport.classList.add('d-none');
+        skillsMatrixView.classList.remove('d-none');
+        matrixViewText.textContent = 'Orbit Universe View';
+        btnOrbitPause.classList.add('d-none');
+      } else {
+        universeViewport.classList.remove('d-none');
+        skillsMatrixView.classList.add('d-none');
+        matrixViewText.textContent = 'Matrix Grid View';
+        btnOrbitPause.classList.remove('d-none');
+      }
+    });
+
+
+    /* ========================================================
+       6. PROJECT CATEGORY FILTER ENGINE
+       ======================================================== */
+    const filterButtons = document.querySelectorAll('#projectFilterGroup button');
+    const projectItems = document.querySelectorAll('.project-item');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.getAttribute('data-filter');
+        projectItems.forEach(item => {
+          if (filter === 'all' || item.getAttribute('data-category') === filter) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    /* Toggle between live image snapshot and interactive iframe sandbox */
+    function toggleProjectView(btnEl, mode, prefix, url) {
+      const parentFrame = btnEl.closest('.project-browser-frame');
+      parentFrame.querySelectorAll('.preview-mode-toggle').forEach(b => b.classList.remove('active-mode'));
+      btnEl.classList.add('active-mode');
+
+      const imgBox = document.getElementById(`${prefix}-img-box`);
+      const frameBox = document.getElementById(`${prefix}-frame-box`);
+
+      if (mode === 'img') {
+        imgBox.style.display = 'block';
+        frameBox.style.display = 'none';
+      } else {
+        imgBox.style.display = 'none';
+        frameBox.style.display = 'block';
+        if (!frameBox.querySelector('iframe') && url) {
+          const iframe = document.createElement('iframe');
+          iframe.src = url;
+          iframe.title = 'Live Deployed Project Preview Sandbox';
+          iframe.loading = 'lazy';
+          iframe.sandbox = 'allow-scripts allow-same-origin allow-forms';
+          frameBox.appendChild(iframe);
+        }
+      }
+    }
+
+    /* ========================================================
+       7. INTERACTIVE CLI TERMINAL ENGINE
+       ======================================================== */
+    const cliOutput = document.getElementById('cliOutput');
+    const cliInput = document.getElementById('cliInput');
+    const cliForm = document.getElementById('cliForm');
+
+    function printCli(text, type = 'text-muted') {
+      const line = document.createElement('div');
+      line.className = `${type} mb-1`;
+      line.innerHTML = text;
+      cliOutput.appendChild(line);
+      cliOutput.scrollTop = cliOutput.scrollHeight;
+    }
+
+    function runCliCommand(rawCmd) {
+      const cmd = rawCmd.trim().toLowerCase();
+      printCli(`<span class="text-success">naivil&gt;</span> ${rawCmd}`, 'text-main');
+
+      switch (cmd) {
+        case 'help':
+          printCli(`Available Commands:
+  - <span class="text-warning">skills</span>    : Display core tech stack
+  - <span class="text-warning">projects</span>  : List live deployed projects
+  - <span class="text-warning">resume</span>    : Retrieve official Google Drive resume link
+  - <span class="text-warning">contact</span>   : Show phone, email, and social profiles
+  - <span class="text-warning">about</span>     : Background &amp; experience summary
+  - <span class="text-warning">clear</span>     : Clean terminal screen`);
+          break;
+
+        case 'skills':
+          printCli(`Core Stack:
+  [Frontend] HTML5, CSS3, Bootstrap 5, JavaScript (ES6+), React JS
+  [Backend]  Node.js, Express.js, REST APIs, JSON
+  [DevOps]   Git, GitHub, Vercel Deployments`, 'text-info');
+          break;
+
+        case 'projects':
+          printCli(`Live Deployed Projects:
+  1. Client Portfolio       -> https://mihir-portfilio.vercel.app
+  2. Restaurant Project      -> https://restaurant-project-gamma-flame.vercel.app
+  3. Student Management Sys  -> https://student-management-system-tau-lilac.vercel.app
+  4. Netflix Clone           -> https://netflix-pr.vercel.app`, 'text-primary');
+          break;
+
+        case 'resume':
+          printCli(`Official Resume (Google Drive):
+  <a href="https://drive.google.com/file/d/1QH_HhUPcuGi46SkKY8VDofnO3KnYL9ns/view?usp=sharing" target="_blank" class="text-info text-decoration-underline">Open Naivil Kotak Resume (PDF)</a>`, 'text-success');
+          break;
+
+        case 'contact':
+          printCli(`Direct Contact:
+  - Phone:    <a href="tel:9409004851" class="text-info">+91 9409004851</a>
+  - Email:    <a href="mailto:kotaknaivil599@gmail.com" class="text-info">kotaknaivil599@gmail.com</a>
+  - LinkedIn: <a href="https://www.linkedin.com/in/naivil-kotak" target="_blank" class="text-info">linkedin.com/in/naivil-kotak</a>
+  - GitHub:   <a href="https://github.com/naivil" target="_blank" class="text-info">github.com/naivil</a>`, 'text-warning');
+          break;
+
+        case 'about':
+          printCli(`Naivil Kotak is an entry-level Full Stack Web Developer (0 years experience) focused on high-velocity learning, clean architecture, and modern JavaScript web apps.`, 'text-secondary');
+          break;
+
+        case 'clear':
+          cliOutput.innerHTML = '';
+          break;
+
+        case '':
+          break;
+
+        default:
+          printCli(`Command not found: '${cmd}'. Type <span class="text-warning">'help'</span> for a list of commands.`, 'text-danger');
+      }
+    }
+
+    cliForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const val = cliInput.value;
+      if (val) {
+        runCliCommand(val);
+        cliInput.value = '';
+      }
+    });
+
+
+    /* ========================================================
+       8. SCROLL-TRIGGERED REVEAL & PROGRESS BAR
+       ======================================================== */
+    const revealObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal-scroll').forEach(el => revealObserver.observe(el));
+
+    // Scroll Progress & Navbar Scrolled State
+    const scrollBar = document.getElementById('scrollProgressIndicator');
+    const mainNav = document.getElementById('mainNavbar');
+    const btnScrollTop = document.getElementById('btnScrollTop');
+
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      scrollBar.style.width = scrolled + '%';
+
+      if (winScroll > 50) {
+        mainNav.classList.add('scrolled');
+      } else {
+        mainNav.classList.remove('scrolled');
+      }
+
+      if (winScroll > 400) {
+        btnScrollTop.style.display = 'flex';
+      } else {
+        btnScrollTop.style.display = 'none';
+      }
+    });
+
+    btnScrollTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+
+    /* ========================================================
+       9. CONTACT FORM INTERACTIVE SUBMISSION
+       ======================================================== */
+    const contactForm = document.getElementById('contactForm');
+    const contactStatus = document.getElementById('contactFormStatus');
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      contactForm.classList.add('was-validated');
+
+      if (!contactForm.checkValidity()) {
+        e.stopPropagation();
+        return;
+      }
+
+      const sender = document.getElementById('formSenderName').value.trim();
+      contactStatus.className = 'alert alert-success d-flex align-items-center gap-2 mb-4';
+      contactStatus.innerHTML = `
+        <i class="bi bi-check-circle-fill fs-5"></i>
+        <div>
+          <strong>Thank you, ${sender}!</strong> Your message has been prepared. You can also directly call 
+          <a href="tel:9409004851" class="text-decoration-underline fw-bold">+91 9409004851</a> or email 
+          <a href="mailto:kotaknaivil599@gmail.com" class="text-decoration-underline fw-bold">kotaknaivil599@gmail.com</a>.
+        </div>
+      `;
+      contactStatus.classList.remove('d-none');
+      contactForm.reset();
+      contactForm.classList.remove('was-validated');
+    });
+
+
+    /* ========================================================
+       10. LIVE CLOCK & COPYRIGHT YEAR
+       ======================================================== */
+    function updateClock() {
+      const now = new Date();
+      document.getElementById('localClock').textContent = now.toLocaleTimeString();
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
